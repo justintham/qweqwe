@@ -11,26 +11,25 @@ import pandas as pd
 
 app = Flask(__name__)
 
-model = pickle.load(open('model_gnb.pkl', 'rb'))
+# 
 
-
-# def get_algorithm(x):
-#     x=int(x)
-#     if x == 0:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_rf.pkl', 'rb'))
-#     elif x == 1:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_gb.pkl', 'rb'))
-#     elif x == 2:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_knn.pkl', 'rb'))
-#     elif x == 3:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_svm.pkl', 'rb'))
-#     elif x == 4:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_dt.pkl', 'rb'))
-#     elif x == 5:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_log.pkl', 'rb'))
-#     elif x == 6:
-#         model = pickle.load(open('../HeartDisease/algorithm/model_gnb.pkl', 'rb'))
-#     return model
+def get_algorithm(x):
+    x=int(x)
+    if x == 0:
+        model = pickle.load(open('algorithm/model_rf.pkl', 'rb'))
+    elif x == 1:
+        model = pickle.load(open('algorithm/model_gb.pkl', 'rb'))
+    elif x == 2:
+        model = pickle.load(open('algorithm/model_knn.pkl', 'rb'))
+    elif x == 3:
+        model = pickle.load(open('algorithm/model_svm.pkl', 'rb'))
+    elif x == 4:
+        model = pickle.load(open('algorithm/model_dt.pkl', 'rb'))
+    elif x == 5:
+        model = pickle.load(open('algorithm/model_log.pkl', 'rb'))
+    elif x == 6:
+        model = pickle.load(open('algorithm/model_gnb.pkl', 'rb'))
+    return model
 
 # def send_email(email):
 #     message = Mail(
@@ -105,14 +104,14 @@ def predict():
     algorithm = request.form.get("algorithm")
     data = [age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal]
     data = list(np.float_(data))
-    # result = get_algorithm(algorithm)
+    result = get_algorithm(algorithm)
     scaler2 = StandardScaler()
     ##CHANGE THE INPUT TO NUMPY ARRAY
     input_data_as_numpy_array = np.asarray(data)
     #RESHAPE THE NUMPY ARRAY BECAUSE WE NEED TO PREDICT THE TARGET
     input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
     std_data = scaler2.fit_transform(input_data_reshaped)
-    prediction = model.predict(input_data_reshaped)
+    prediction = result.predict(input_data_reshaped)
     if prediction[0] == 0:
         return render_template('main.html', prediction_text='The patient does not have Heart Disease' )
     else:
