@@ -104,7 +104,7 @@ def predict():
     thal = request.form.get("thal")
     algorithm = request.form.get("algorithm")
     data = [age,sex,cp,trestbps,chol,fbs,restecg,thalach,exang,oldpeak,slope,ca,thal]
-    # data = list(np.float_(data))
+    data = list(np.float_(data))
     # result = get_algorithm(algorithm)
     scaler2 = StandardScaler()
     ##CHANGE THE INPUT TO NUMPY ARRAY
