@@ -431,7 +431,8 @@ def login():
 
 @app.route('/email_verify/<email>')
 def email_verify(email):
-    email_verification(email)
+    #email_verification(email)
+    send_email(email)
     return render_template('email_verify.html')
 
 # @app.route('/success/<email>')
