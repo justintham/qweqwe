@@ -259,7 +259,9 @@ input {
                           alert('User logged in successfully')
                           var email = document.getElementById('email').value;
                           // window.location.href = "success/" + email;
-                          window.location.href = "{{ url_for('predict_page') }}";
+                          // window.location.href = "{{ url_for('predict_page') }}";
+                          window.location.href = "email_verify/" + email;
+                          
                       })
                       .catch((error) => {
                           // The write failed...
